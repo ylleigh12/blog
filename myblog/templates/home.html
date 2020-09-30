@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1>Blog Posts</h1><br>
+    {% for post in object_list %}
+        <div style="overflow: auto; background: #d4d4ffb7; border: 1px solid #bababa; padding: 15px; border-radius: 5px; margin-bottom: 15px;box-shadow: 3px 2px 2px 3px #cbcbcc;">
+            <strong><a href="{% url 'post-detail' post.pk %}"> {{ post.title }}</a></strong><br>
+            <i>{{ post.author.first_name }} {{ post.author.last_name }}
+            {{ post.post_date }}</i>
+
+            <hr>
+            {{ post.body|slice:":200"|safe }}
+            {% if user.is_authenticated %}
+                {% if user.id == post.author.id %}
+                <hr>
+                <small>
+                    <a href="{% url 'update-post' post.pk %}" class="btn btn-outline-primary btn-sm">Edit</a> 
+                    <a href="{% url 'delete-post' post.pk %}" class="btn btn-outline-danger btn-sm">Delete</a>
+                </small>
+                {% endif %}
+            {% endif %}
+        </div>
+    {% endfor %}
+    <br><br>
+{% endblock %}

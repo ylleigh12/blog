@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}
+    Update Blog Post
+{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+    {% if user.id == post.author.id %}
+    <div style="background: #d4d4ffb7; padding: 15px;">
+        <h1>Update Blog Post</h1>
+        <br>
+        
+        <div class="form-group">
+            <form action="" method="post">
+            
+                {% csrf_token %}
+
+                {{ form.media }}
+                {{ form.as_p }}
+                <button class="btn btn-secondary">Update</button>
+            </form>
+        </div>
+    </div>
+    {% else %}
+        You are not allowed to access this page.
+    {% endif %}
+{% else %}
+    You are not allowed to access this page.
+{% endif %}
+<br>    
+{% endblock %}

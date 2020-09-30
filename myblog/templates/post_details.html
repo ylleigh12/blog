@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{post.title}}
+{% endblock %}
+
+    {% block content %}
+        <div style="background: #d4d4ffb7; padding: 15px;">
+            <h1>{{ post.title }}</h1>
+            <small>By: 
+                {{ post.author.first_name }} 
+                {{ post.author.last_name }} - 
+                {{ post.post_date }}
+
+            </small><br>
+            <hr>
+            {{ post.body|safe }}
+            
+            {% if user.is_authenticated %}
+            {% if user.id == post.author.id %}
+                <hr>
+                <a href="{% url 'update-post' post.pk %}" class="btn btn-outline-primary btn-sm"> Edit</a> 
+                <a href="{% url 'delete-post' post.pk %}" class="btn btn-outline-danger btn-sm"> Delete</a>
+            {% endif %}
+        {%endif%}
+
+
+            <br><br>
+            <h2>Comments</h2>
+            <br>
+            {% if not post.comments.all %}
+
+                No comment yet.
+                <a href="{% url 'add-comment' post.pk %}">Add One</a><br><br>
+
+            {% else %}
+                {% for comment in post.comments.all %}
+                    <strong>{{ comment.name }} - {{ comment.date_added }}</strong>
+                    <br>
+                    {{ comment.body }} 
+                    <br>
+                    <a href="{% url 'delete-comment' comment.pk %}">Delete Comment</a>
+
+                    <br><br>
+                {% endfor %}
+                <a href="{% url 'add-comment' post.pk %}">Add Comment</a><br><br>
+
+            {% endif %}
+
+            <a href="{% url 'home' %}" class="btn btn-secondary">Back</a>
+        </div>
+    {% endblock %}

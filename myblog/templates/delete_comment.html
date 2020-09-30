@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block title %}
+    Delete Comment
+{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+        <h1>Delete Comment</h1>
+        <br>
+        <br>
+        
+        <div class="form-group">
+            <form action="" method="post">
+            
+                {% csrf_token %}
+                <strong>Are you sure you wanna delete this comment?</strong><br><br>
+                <button class="btn btn-secondary">Delete Comment</button>
+            </form>
+        </div>
+{% endif %}    
+{% endblock %}

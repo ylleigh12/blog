@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block title %}
+    Delete Blog Post
+{% endblock %}
+
+{% block content %}
+
+{% if user.is_authenticated %}
+    {% if user.id == post.author.id %}
+    <div style="background: #d4d4ffb7; padding: 15px;">
+        <h1>Delete Blog Post</h1>
+        <br>
+        <h3>Delete: {{ post.title }}</h3>
+        <br>
+        
+        <div class="form-group">
+            <form action="" method="post">
+            
+                {% csrf_token %}
+                <strong>Are you sure you wanna delete this post?</strong><br><br>
+                <button class="btn btn-secondary">Delete Post</button>
+            </form>
+        </div>
+    </div>
+    {% else %}
+        You are not allowed to access this page.
+    {% endif %}
+{% else %}
+    You are not allowed to access this page.
+{% endif %}
+    
+{% endblock %}
